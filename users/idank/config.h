@@ -89,3 +89,9 @@
 #ifdef OLED_ENABLE
     #define SPLIT_LAYER_STATE_ENABLE
 #endif
+
+#undef MASTER_LEFT
+#undef MASTER_RIGHT
+
+#define MASTER_LEFT
+#define OLED_FLIP

@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+    return OLED_ROTATION_270;  // I want the layer information to be straight
   return rotation;
 }
 
@@ -194,17 +194,18 @@ bool oled_task_user(void) {
   #endif
   if (condition) {
     // Host Keyboard Layer Status
-    oled_write_P(PSTR("Layer: "), false);
+    oled_write_ln_P(PSTR("Layer"), false);
+    oled_write_ln_P(PSTR("-----"), false);
 
     switch (get_highest_layer(layer_state)) {
     case _QWERTY:
-        oled_write_ln_P(PSTR("Default"), false);
+        oled_write_ln_P(PSTR("Deflt (0)"), false);
         break;
     case _RAISE:
-        oled_write_ln_P(PSTR("Raise"), false);
+        oled_write_ln_P(PSTR("Raise (2)"), false);
         break;
     case _LOWER:
-        oled_write_ln_P(PSTR("Lower"), false);
+        oled_write_ln_P(PSTR("Lower (1)"), false);
         break;
     case _ADJUST:
         oled_write_ln_P(PSTR("Adjust"), false);
@@ -213,8 +214,8 @@ bool oled_task_user(void) {
         oled_write_ln_P(PSTR("Undefined"), false);
     }
 
-    oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
+    // oled_write_ln(read_keylog(), false);
+    // oled_write_ln(read_keylogs(), false);
 
   } else {
       render_logo();
@@ -227,7 +228,7 @@ bool oled_task_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef OLED_ENABLE
-    set_keylog(keycode, record);
+    // set_keylog(keycode, record);
 #endif
     // set_timelog();
   }
